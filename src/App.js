@@ -1,5 +1,5 @@
 import React from 'react';
-
+import './components/TodoComponents/Todo.css';
 import TodoForm from './components/TodoComponents/TodoForm';
 import TodoList from './components/TodoComponents/TodoList';
 
@@ -37,8 +37,8 @@ class App extends React.Component {
       todoList: todoData,
       todoTask: {
        task: '',
-       id: '',
-       completed: '', 
+       id: Date.now(),
+       completed: false, 
       }
     };
   }
@@ -46,35 +46,52 @@ handleChange = (e) => {
   this.setState({
     todoTask: {
       ...this.state.todoList,
-      task: e.target.value,
+      task: e.target.value, 
       id: Date.now(),
       completed: false
     }
   })
   console.log(this.state.todoTask.task);
 };
-handleClearClick = (e) => {
 
+handleClearClick = (e) => {
+  let taskVar = [];
+  taskVar.push(this.state.todoList);
+  console.log(taskVar);
+ let tasksToLeaveIn = taskVar.filter(t => t.completed === false);
+ console.log(tasksToLeaveIn)
+  this.setState({
+    todoList: tasksToLeaveIn
+  })
 }
+
+handleComplete = (e) => {
+this.setState({
+  todoList: {
+    completed: !this.state.todoList.completed
+  }})
+  e.target.style.textDecoration === 'line-through' ? e.target.style.textDecoration = 'none' : e.target.style.textDecoration = 'line-through'; 
+}
+
 handleAddClick = (e) => {
   
   this.setState({
     todoList: [...this.state.todoList, this.state.todoTask],
     todoTask: {
       task: '',
-      id: '',
-      completed: '', 
+      id: Date.now(),
+      completed: false, 
      }
   })
 }
 
   render() {
     return (
-      <div>
-        <h2>Welcome to your Todo App!</h2>
+      <div className='wholechabang'>
+        <h2 className='title'>Welcome to your Todo App!</h2>
 
-        <TodoList forButtonAdd={this.state.todoList}/>
-        <TodoForm handleAddClick={this.handleAddClick} task={this.state.todoTask.task} handleChange={this.handleChange} />
+        <TodoList forButtonAdd={this.state.todoList} clickTask={this.handleComplete} passForComplete={this.state.todoList}/>
+        <TodoForm handleAddClick={this.handleAddClick} task={this.state.todoTask.task} handleChange={this.handleChange} clearClick={this.handleClearClick} />
       </div>
 
     );

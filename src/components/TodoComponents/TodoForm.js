@@ -4,9 +4,9 @@ const TodoForm = (props) => {
 
 
     return (
-        <div>
+        <div className='btnFlex'>
         <form name='addTodo'>
-            <input 
+            <input className='textenter'
                 type='text'
                 value={props.task}
                 placeholder='task'
@@ -14,8 +14,10 @@ const TodoForm = (props) => {
                 onChange={props.handleChange}
             />
         </form>
-        <button onClick={props.handleAddClick}>Add Todo</button>
-        <button >Clear Completed</button>
+        <div className='btn'>
+            <button onClick={props.handleAddClick}>Add Todo</button>
+            <button onClick={props.clearClick}>Clear Completed</button>
+        </div>
         </div>
     );
 
