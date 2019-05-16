@@ -4,25 +4,26 @@ import TodoForm from './components/TodoComponents/TodoForm';
 import TodoList from './components/TodoComponents/TodoList';
 
 
-const todoData = [
+
+const todoList = [
   {
   task: 'Coding Class',
-  id: Date.now(),
+  id: 1,
   completed: false,
 },
 {
   task: 'BJJ Class',
-  id: Date.now(),
+  id: 2,
   completed: false,
 },
 {
   task: 'Cook Food',
-  id: Date.now(),
+  id: 3,
   completed: false,
 },
 {
   task: 'Apply for job',
-  id: Date.now(),
+  id: 4,
   completed: false,
 },
 ]
@@ -34,14 +35,14 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      todoList: todoData,
+      todoList,
       todoTask: {
        task: '',
-       id: Date.now(),
-       completed: false, 
+       id: '',
+       completed: '', 
       }
     };
-  }
+  } 
 handleChange = (e) => {
   this.setState({
     todoTask: {
@@ -55,23 +56,31 @@ handleChange = (e) => {
 };
 
 handleClearClick = (e) => {
-  let taskVar = [];
-  taskVar.push(this.state.todoList);
-  console.log(taskVar);
- let tasksToLeaveIn = taskVar.filter(t => t.completed === false);
- console.log(tasksToLeaveIn)
+  e.preventDefault();
   this.setState({
-    todoList: tasksToLeaveIn
-  })
-}
+    todoList: this.state.todoList.filter(item => !item.completed)
+  });
+};
 
-handleComplete = (e) => {
-this.setState({
-  todoList: {
-    completed: !this.state.todoList.completed
-  }})
-  e.target.style.textDecoration === 'line-through' ? e.target.style.textDecoration = 'none' : e.target.style.textDecoration = 'line-through'; 
-}
+handleComplete = itemId => {
+  console.log('item Id: ', itemId);
+   this.setState({
+     id: Date.now(),
+     todoList: this.state.todoList.map(item => {
+       if (itemId === item.id) {
+         return {
+           ...item,
+           completed: !item.completed
+         };
+       }
+       return item;
+     })
+   });
+};
+
+
+ //e.target.style.textDecoration === 'line-through' ? e.target.style.textDecoration = 'none' : e.target.style.textDecoration = 'line-through';
+
 
 handleAddClick = (e) => {
   
@@ -90,7 +99,7 @@ handleAddClick = (e) => {
       <div className='wholechabang'>
         <h2 className='title'>Welcome to your Todo App!</h2>
 
-        <TodoList forButtonAdd={this.state.todoList} clickTask={this.handleComplete} passForComplete={this.state.todoList}/>
+        <TodoList todoList={this.state.todoList} mark={this.markCompleted} toggle={this.handleComplete}/>
         <TodoForm handleAddClick={this.handleAddClick} task={this.state.todoTask.task} handleChange={this.handleChange} clearClick={this.handleClearClick} />
       </div>
 
@@ -100,3 +109,8 @@ handleAddClick = (e) => {
 
 export default App;
 
+//pass funcs to todolist then to todo
+//
+
+//setstate in this layered object state
+//handleClearclick
