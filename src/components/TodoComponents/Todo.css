@@ -1,0 +1,39 @@
+.title {
+    color: red;
+    font-size: 5rem
+}
+.wholechabang {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 10%;
+    border: 10px dotted yellow
+}
+body {
+    background-color: aqua
+}
+.theinfo {
+    color: white;
+    font-size: 2.5rem;
+}
+.completed {
+    text-decoration: line-through;
+}
+.textenter {
+    width: 300px;
+    height: 50px;
+    font-size: 2rem;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.btnFlex {
+    display: flex;
+    flex-direction: row;
+}
+.btn {
+    height: 56px;
+    margin-top: 50px;
+}
+.btn button {
+    height: 100%
+}
