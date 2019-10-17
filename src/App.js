@@ -131,7 +131,7 @@ searchUtilityStep2 = (e) => {
  
  };
 
-
+}
 
 handleAddClick = (e) => {
   
@@ -144,7 +144,7 @@ handleAddClick = (e) => {
      }
   })
 }
-}
+
 
   render() {
     return (
