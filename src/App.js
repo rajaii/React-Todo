@@ -2,6 +2,7 @@ import React from 'react';
 import './components/TodoComponents/Todo.css';
 import TodoForm from './components/TodoComponents/TodoForm';
 import TodoList from './components/TodoComponents/TodoList';
+import SearchForm from './components/TodoComponents/SearchForm';
 
 
 
@@ -26,7 +27,8 @@ const todoList = [
   id: 4,
   completed: false,
 },
-]
+];
+
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -40,13 +42,14 @@ class App extends React.Component {
        task: '',
        id: '',
        completed: '', 
-      }
+      },
+      error: '',
     };
   } 
 handleChange = (e) => {
   this.setState({
+    ...this.state.todoList,
     todoTask: {
-      ...this.state.todoList,
       task: e.target.value, 
       id: Date.now(),
       completed: false
@@ -79,7 +82,55 @@ handleComplete = itemId => {
 };
 
 
- //e.target.style.textDecoration === 'line-through' ? e.target.style.textDecoration = 'none' : e.target.style.textDecoration = 'line-through';
+searchUtilityStep1 = (e) => {
+  this.setState({
+    ...this.state.todoList,
+    todoTask: {
+      task: e.target.value,
+      id: Date.now(),
+      completed: false,
+    }
+  })
+}
+
+
+searchUtilityStep3() {
+  this.setState({
+    todoList: [...this.state.todoList, this.state.todoTask],
+    todoTask: {
+      task: '',
+      id: Date.now(),
+      completed: false,
+    }
+  });
+
+};
+
+searchUtilityStep2 = (e) => {
+  let potentialAnswer = this.state.todoList.filter(item => 
+    item.task === e.target.value 
+  )
+  console.log(potentialAnswer)
+  if (potentialAnswer.length > 0) {
+  this.setState({
+    todoList: [this.state.todoList, this.state.todoTask],
+    todoTask: {
+      task: '',
+      id: Date.now(),
+      completed: false,
+    }
+  });
+ } else { 
+  this.setState({
+   error: 'wrong search option',
+    
+  })
+  
+  this.searchUtilityStep3();
+ 
+ 
+ };
+
 
 
 handleAddClick = (e) => {
@@ -94,6 +145,7 @@ handleAddClick = (e) => {
   })
 }
 
+
   render() {
     return (
       <div className='wholechabang'>
@@ -101,6 +153,7 @@ handleAddClick = (e) => {
 
         <TodoList todoList={this.state.todoList} mark={this.markCompleted} toggle={this.handleComplete}/>
         <TodoForm handleAddClick={this.handleAddClick} task={this.state.todoTask.task} handleChange={this.handleChange} clearClick={this.handleClearClick} />
+        <SearchForm sU1={this.searchUtilityStep1} searchUtility={this.searchUtilityStep2} list={this.state.todoTask.task}/>
       </div>
 
     );
@@ -108,9 +161,3 @@ handleAddClick = (e) => {
 }
 
 export default App;
-
-//pass funcs to todolist then to todo
-//
-
-//setstate in this layered object state
-//handleClearclick

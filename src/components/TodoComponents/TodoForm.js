@@ -14,10 +14,14 @@ const TodoForm = (props) => {
                 name='task'
                 onChange={props.handleChange}
             />
+            
         </form>
+        
         <div className='btn'>
             <button onClick={props.handleAddClick}>Add Todo</button>
             <button onClick={props.clearClick}>Clear Completed</button>
+            
+            
         </div>
         </div>
     );
