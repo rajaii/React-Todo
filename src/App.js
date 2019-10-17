@@ -144,7 +144,7 @@ handleAddClick = (e) => {
      }
   })
 }
-
+}
 
   render() {
     return (
